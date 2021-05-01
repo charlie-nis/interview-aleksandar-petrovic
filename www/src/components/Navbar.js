@@ -1,17 +1,19 @@
-const Navbar = () => {
+import { Link } from 'react-router-dom';
+
+const Navbar = ({ appVersion }) => {
   return (
     <div style={{ marginBottom: '30px' }} className='navbar-fixed'>
       <nav className='blue'>
         <div className='nav-wrapper nav-container'>
-          <a href='#!' className='brand-logo'>
+          <Link to='/' className='brand-logo'>
             <i style={{ fontSize: '50px' }} className='material-icons '>
               task_alt
             </i>
-            ToDoList App <small style={{ fontSize: '9px' }}> v1.2</small>
-          </a>
-          <ul className='right hide-on-med-and-down'>
+            ToDoList App <small style={{ fontSize: '9px' }}> v{appVersion}</small>
+          </Link>
+          <ul className='right '>
             <li>
-              <a href='About.html'>About</a>
+              <Link to='/About'>About</Link>
             </li>
           </ul>
         </div>

@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
   newItem.save().then((item) => res.json(item));
 });
 
-// @route  DELETE API/items:id dddd
+// @route  DELETE API/items:id
 // @desc   Delete item
 // @access Public
 router.delete('/:id', (req, res) => {

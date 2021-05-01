@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const AddTask = ({ onAdd }) => {
+const AddItem = ({ onAdd }) => {
   const [text, setText] = useState('');
 
   const onSubmit = (e) => {
@@ -15,13 +15,13 @@ const AddTask = ({ onAdd }) => {
   };
 
   return (
-    <form className='add-form' onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <div className='input-field'>
-        <input type='text' placeholder='Add Task' value={text} onChange={(e) => setText(e.target.value)} />
-        <input type='submit' value='Add Task' className='btn btn-block' />
+        <input type='text' placeholder='Add Item' value={text} onChange={(e) => setText(e.target.value)} />
+        <input type='submit' value='Add Item' className='btn btn-block' />
       </div>
     </form>
   );
 };
 
-export default AddTask;
+export default AddItem;
