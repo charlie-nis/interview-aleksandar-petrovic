@@ -2,23 +2,21 @@ import { useState } from 'react';
 
 const AddItem = ({ onAdd }) => {
   const [text, setText] = useState('');
+  const completed = false;
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!text) {
-      alert('Please add a task');
-      return;
-    }
-
-    onAdd({ text });
+    onAdd({ text, completed });
     setText('');
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <div className='input-field'>
-        <input type='text' placeholder='Add Item' value={text} onChange={(e) => setText(e.target.value)} />
-        <input type='submit' value='Add Item' className='btn btn-block' />
+    <form className='row' onSubmit={onSubmit}>
+      <div className='input-field inline col s12'>
+        <input type='text' placeholder='Add Item' required className='col s10 validate' value={text} onChange={(e) => setText(e.target.value)} />
+        <button type='submit' className='waves-effect waves-light btn col s2'>
+          Add Item
+        </button>
       </div>
     </form>
   );

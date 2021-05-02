@@ -10,19 +10,19 @@ const Item = ({ item, onDelete, onToggleCompleted }) => {
         <span>
           {item.completed ? (
             <>
-              <MdCheckCircle style={{ color: 'green', cursor: 'pointer' }} onClick={() => onToggleCompleted(item.id)} />
+              <MdCheckCircle style={{ color: 'green', cursor: 'pointer' }} onClick={() => onToggleCompleted(item)} />
               <span style={{ textDecoration: 'line-through' }}> {item.text}</span>
             </>
           ) : (
-            <>
-              <MdRadioButtonUnchecked style={{ color: 'gray', cursor: 'pointer' }} onClick={() => onToggleCompleted(item.id)} />
+            <span className='right-align'>
+              <MdRadioButtonUnchecked style={{ color: 'gray', cursor: 'pointer' }} onClick={() => onToggleCompleted(item)} />
               {item.text}
-              <MdModeEdit style={{ color: 'blue', cursor: 'pointer' }} onClick={() => onToggleCompleted(item.id)} />
-            </>
+              <MdModeEdit className='' style={{ color: 'blue', cursor: 'pointer' }} onClick={() => onToggleCompleted(item)} />
+            </span>
           )}
         </span>
 
-        <MdCancel style={{ color: 'red', cursor: 'pointer' }} onClick={() => onDelete(item.id)} />
+        <MdCancel className='right' style={{ color: 'red', cursor: 'pointer' }} onClick={() => onDelete(item.id)} />
       </h4>
     </div>
   );

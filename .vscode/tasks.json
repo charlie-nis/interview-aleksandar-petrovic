@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "server",
+			"path": "api/",
+			"problemMatcher": [],
+			"label": "Start express/mongo",
+			"detail": "nodemon server.js",
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "www/",
+			"problemMatcher": [],
+			"label": "Launch App",
+			"detail": "react-scripts start",
+		}
+	]
+}

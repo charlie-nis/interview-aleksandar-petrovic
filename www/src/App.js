@@ -7,40 +7,71 @@ import Navbar from './components/Navbar';
 import AddItem from './components/AddItem';
 import About from './components/About';
 import Items from './components/Items';
+import axios from 'axios';
 
 function App() {
   const appVersion = '1.0';
-  const [items, setItems] = useState([
-    {
-      id: '1',
-      text: 'it1',
-      completed: false,
-    },
-    {
-      id: '2',
-      text: 'it2',
-      completed: false,
-    },
-    {
-      id: '3',
-      text: 'it3',
-      completed: true,
-    },
-  ]);
+  const url = 'http://localhost:5000/api/items';
+  const [items, setItems] = useState([]);
+
   useEffect(() => {
     // Initialize Materialize JS
     M.AutoInit();
-  });
+    getAllItems();
+  }, []);
+
+  //Get All Items
+  const getAllItems = () => {
+    axios
+      .get(url)
+      .then((res) => {
+        // console.log(res.data);
+        const allItems = res.data.map((item) => ({ id: item._id, text: item.text, completed: item.completed }));
+        setItems(allItems);
+        //console.log(allItems);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Update Item
+  const updateItem = (item) => {
+    axios
+      .put(`${url}/${item.id}`, item)
+      .then((res) =>
+        res.data.success
+          ? setItems(items.map((mItem) => (mItem.id === item.id ? { id: item.id, text: item.text, completed: item.completed } : mItem)))
+          : alert('Something went wrong')
+      )
+      .catch((err) => alert('Something went wrong'));
+  };
 
   // Delete Item
   const deleteItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
+    axios
+      .delete(`${url}/${id}`)
+      .then((res) => (res.data.success ? setItems(items.filter((item) => item.id !== id)) : alert('Something went wrong')))
+      .catch((err) => alert('Something went wrong'));
   };
 
   //Toggle completed
-  const onToggleCompleted = (id) => {
-    setItems(items.map((item) => (item.id === id ? { ...item, completed: !item.completed } : item)));
+  const onToggleCompleted = (item) => {
+    item = { ...item, completed: !item.completed };
+    updateItem(item);
   };
+
+  // Add Item
+  const addItem = (item) => {
+    axios
+      .post(url, item)
+      .then((res) => {
+        item = { ...item, id: res.data._id };
+        setItems([...items, item]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <Router>
       <Navbar appVersion={appVersion} />
@@ -50,7 +81,7 @@ function App() {
           exact
           render={(props) => (
             <>
-              <AddItem onAdd={{}} />
+              <AddItem onAdd={addItem} />
               {items.length > 0 ? <Items items={items} onDelete={deleteItem} onToggleCompleted={onToggleCompleted} /> : 'add somthing to do'}
             </>
           )}
