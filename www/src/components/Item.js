@@ -25,7 +25,7 @@ const Item = ({ item, onDelete, onToggleCompleted, onEdit }) => {
             <i className='col material-icons list-icon right ic-red ' onClick={() => onDelete(item.id)}>
               delete
             </i>
-            <i className='col material-icons list-icon right ic-blue ' onClick={() => onEdit(item)}>
+            <i href='#modal1' className='col material-icons list-icon right ic-blue modal-trigger ' onClick={() => onEdit(item)}>
               mode_edit
             </i>
           </span>
