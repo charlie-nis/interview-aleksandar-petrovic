@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import AddItem from './components/AddItem';
 import About from './components/About';
 import Items from './components/Items';
+import EditItem from './components/EditItem';
 import axios from 'axios';
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
 
   useEffect(() => {
     // Initialize Materialize JS
-    M.AutoInit();
+    //  M.AutoInit();
+
     getAllItems();
   }, []);
 
@@ -72,17 +74,25 @@ function App() {
       });
   };
 
+  //Edit Item
+  const onEdit = (item) => {
+    console.log(item);
+    //M.toast({ html: 'sdfsdfsdfsdf' });
+    <EditItem />;
+  };
+
   return (
     <Router>
       <Navbar appVersion={appVersion} />
-      <div className='app-container'>
+      <div className='container card-panel rounded' style={{ paddingBottom: '30px' }}>
         <Route
           path='/'
           exact
           render={(props) => (
             <>
               <AddItem onAdd={addItem} />
-              {items.length > 0 ? <Items items={items} onDelete={deleteItem} onToggleCompleted={onToggleCompleted} /> : 'add somthing to do'}
+              <EditItem />
+              {items.length > 0 ? <Items items={items} onDelete={deleteItem} onToggleCompleted={onToggleCompleted} onEdit={onEdit} /> : 'add somthing to do'}
             </>
           )}
         ></Route>

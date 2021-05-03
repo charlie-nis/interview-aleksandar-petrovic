@@ -1,30 +1,37 @@
-import { MdCancel } from 'react-icons/md';
-import { MdModeEdit } from 'react-icons/md';
-import { MdCheckCircle } from 'react-icons/md';
-import { MdRadioButtonUnchecked } from 'react-icons/md';
-
-const Item = ({ item, onDelete, onToggleCompleted }) => {
+const Item = ({ item, onDelete, onToggleCompleted, onEdit }) => {
   return (
-    <div className=''>
-      <h4>
-        <span>
-          {item.completed ? (
-            <>
-              <MdCheckCircle style={{ color: 'green', cursor: 'pointer' }} onClick={() => onToggleCompleted(item)} />
-              <span style={{ textDecoration: 'line-through' }}> {item.text}</span>
-            </>
-          ) : (
-            <span className='right-align'>
-              <MdRadioButtonUnchecked style={{ color: 'gray', cursor: 'pointer' }} onClick={() => onToggleCompleted(item)} />
+    <h5 className='' style={{ borderColor: 'blue', padding: '10px', margin: '5px', backgroundColor: 'white' }}>
+      <div className='col s12 '>
+        {item.completed ? (
+          <span>
+            <i className='material-icons list-icon col ' style={{ color: 'green' }} onClick={() => onToggleCompleted(item)}>
+              check_circle
+            </i>
+            <span className='col s10 light-gray' style={{ verticalAlign: 'middle', textDecoration: 'line-through' }}>
               {item.text}
-              <MdModeEdit className='' style={{ color: 'blue', cursor: 'pointer' }} onClick={() => onToggleCompleted(item)} />
             </span>
-          )}
-        </span>
-
-        <MdCancel className='right' style={{ color: 'red', cursor: 'pointer' }} onClick={() => onDelete(item.id)} />
-      </h4>
-    </div>
+            <i className='col material-icons list-icon right ic-red light-gray ' onClick={() => onDelete(item.id)}>
+              delete
+            </i>
+          </span>
+        ) : (
+          <span>
+            <i className='col material-icons list-icon ic-green ' onClick={() => onToggleCompleted(item)}>
+              radio_button_unchecked
+            </i>
+            <span className='col ' style={{ verticalAlign: 'middle' }}>
+              {item.text}
+            </span>
+            <i className='col material-icons list-icon right ic-red ' onClick={() => onDelete(item.id)}>
+              delete
+            </i>
+            <i className='col material-icons list-icon right ic-blue ' onClick={() => onEdit(item)}>
+              mode_edit
+            </i>
+          </span>
+        )}
+      </div>
+    </h5>
   );
 };
 

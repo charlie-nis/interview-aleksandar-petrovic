@@ -4,7 +4,7 @@ const Navbar = ({ appVersion }) => {
   return (
     <div style={{ marginBottom: '30px' }} className='navbar-fixed'>
       <nav className='blue'>
-        <div className='nav-wrapper nav-container'>
+        <div className='nav-wrapper container'>
           <Link to='/' className='brand-logo'>
             <i style={{ fontSize: '50px' }} className='material-icons '>
               task_alt
