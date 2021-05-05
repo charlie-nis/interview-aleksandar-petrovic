@@ -14,8 +14,7 @@ const AddItem = ({ onAdd }) => {
     <form className='row' onSubmit={onSubmit}>
       <div className='input-field inline col s12'>
         <input type='text' placeholder='Add Item' required className='col s10 validate ' value={text} onChange={(e) => setText(e.target.value)} />
-
-        <button className='btn-floating btn-large waves-effect waves-light blue right add-icon' type='submit' name='action'>
+        <button className='btn-floating btn-large waves-effect waves-light blue right add-icon ' type='submit' name='action'>
           <i className='material-icons  '>add_task</i>
         </button>
       </div>

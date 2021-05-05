@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'materialize-css/dist/css/materialize.min.css';
-import M from 'materialize-css';
 import './App.css';
 import Navbar from './components/Navbar';
 import AddItem from './components/AddItem';
 import About from './components/About';
 import Items from './components/Items';
-import EditItem from './components/EditItem';
+import EditItemModal from './components/EditItemModal';
 import axios from 'axios';
 
 function App() {
   const appVersion = '1.0';
   const url = 'http://localhost:5000/api/items';
   const [items, setItems] = useState([]);
+  const [editState, setEditState] = useState({ showModal: false, item: [], ref: [] });
 
   useEffect(() => {
-    // Initialize Materialize JS
-    //  M.AutoInit();
-
     getAllItems();
   }, []);
 
@@ -75,58 +72,41 @@ function App() {
   };
 
   //Edit Item
-  const onEdit = (item) => {
-    console.log(item);
-    const options = {
-      onOpenStart: () => {
-        console.log('Open Start');
-      },
-      onOpenEnd: () => {
-        console.log('Open End');
-      },
-      onCloseStart: () => {
-        console.log('Close Start');
-      },
-      onCloseEnd: () => {
-        console.log('Close End');
-      },
-      inDuration: 250,
-      outDuration: 250,
-      opacity: 0.5,
-      dismissible: true,
-      startingTop: '4%',
-      endingTop: '10%',
-    };
-    //M.toast({ html: 'sdfsdfsdfsdf' });
+  const onEdit = (item, itemRef) => {
+    console.log(itemRef);
+    //e.preventDefault();
 
-    let elems = document.querySelectorAll('.modal');
-    M.Modal.init(elems, options);
-    //instance.open();
+    setEditState({ showModal: true, item: item, ref: itemRef });
+  };
+
+  const modalHandler = () => {
+    console.log(editState);
+    let newEditState = { ...editState, showModal: false };
+    setEditState(newEditState);
+  };
+
+  const onChangeItem = (text) => {
+    let newItem = { ...editState.item, text: text.text };
+    let newEditState = { ...editState, showModal: false, item: newItem };
+    setEditState(newEditState);
+    text.text === '' ? deleteItem(newItem.id) : updateItem(newItem);
+    console.log(newEditState);
   };
 
   return (
     <Router>
       <Navbar appVersion={appVersion} />
-      <div id='modal1' className='modal'>
-        <div className='modal-content'>
-          <h4>Modal Header</h4>
-          <p>A bunch of text</p>
-        </div>
-        <div className='modal-footer'>
-          <a href='#!' className='modal-close waves-effect waves-green btn-flat'>
-            Agree
-          </a>
-        </div>
-      </div>
+
       <div className='container card-panel rounded' style={{ paddingBottom: '30px' }}>
         <Route
           path='/'
           exact
           render={(props) => (
             <>
+              <EditItemModal editState={editState} modalHandler={modalHandler} onChangeItem={onChangeItem} />
               <AddItem onAdd={addItem} />
-              <EditItem />
-              {items.length > 0 ? <Items items={items} onDelete={deleteItem} onToggleCompleted={onToggleCompleted} onEdit={onEdit} /> : 'add somthing to do'}
+
+              {items.length > 0 ? <Items items={items} onDelete={deleteItem} onToggleCompleted={onToggleCompleted} onEdit={onEdit} /> : 'add something to do'}
             </>
           )}
         ></Route>

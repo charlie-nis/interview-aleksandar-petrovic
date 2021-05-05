@@ -17,12 +17,25 @@ body {
 .list-icon {
   cursor: pointer;
   color: rgba(0, 0, 0, 0.54);
+  margin: 0;
   margin-right: 5px;
   vertical-align: middle;
   text-align: center;
   user-select: none;
   border-radius: 50%;
-  padding: 5px;
+  padding: 8px !important;
+}
+
+.modal-icon {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.54);
+  margin: 0;
+  margin-right: 5px;
+  vertical-align: middle;
+  text-align: center;
+  user-select: none;
+  border-radius: 50%;
+  padding: 8px !important;
 }
 
 .list-icon:hover {
@@ -48,4 +61,38 @@ body {
 .add-icon:hover {
   transition: all 0.5s ease;
   transform: scale(1.2);
+}
+
+.EditItemModal {
+  position: fixed;
+  z-index: 500;
+  background-color: white;
+  width: 0px;
+  border: 0px;
+  border-radius: 50px;
+  left: 0px;
+  top: 0px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.Backdrop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+h5 {
+  font-size: 24px;
+}
+
+input {
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif !important;
+  font-size: 24px !important;
 }
