@@ -59,8 +59,8 @@ body {
 }
 
 .add-icon:hover {
-  transition: all 0.5s ease;
-  transform: scale(1.2);
+  transition: all 0.3s ease;
+  transform: scale(1.1);
 }
 
 .EditItemModal {

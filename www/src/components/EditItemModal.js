@@ -1,20 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Backdrop from './Backdrop';
 
-const EditItemModal = ({ editState, modalHandler, onChangeItem }) => {
+const EditItemModal = ({ editState, closeModal, onChangeItem }) => {
   const [text, setText] = useState('');
+  const myInput = useRef(null);
 
   const onSubmit = (e) => {
     e.preventDefault();
     onChangeItem({ text });
+    myInput.current.blur();
   };
+
   useEffect(() => {
     setText(editState.item.text);
   }, [editState.item.text]);
 
+  useEffect(() => {
+    myInput.current.focus();
+  }, [editState.showModal]);
+
   return (
     <div className=''>
-      <Backdrop show={editState.showModal} modalHandler={modalHandler} />
+      <Backdrop show={editState.showModal} closeModal={closeModal} />
       <div
         className='EditItemModal row '
         style={
@@ -45,7 +52,7 @@ const EditItemModal = ({ editState, modalHandler, onChangeItem }) => {
             <input
               type='text'
               placeholder='If you submit empty task, it will delete it'
-              // required
+              ref={myInput}
               className='col s10'
               style={{ marginLeft: 0, padding: 0, margin: 0 }}
               value={text || ''}
@@ -54,7 +61,7 @@ const EditItemModal = ({ editState, modalHandler, onChangeItem }) => {
             <i className='col material-icons list-icon right ic-green  ' style={{ margin: '5px', marginLeft: '3px', marginTop: '9px' }} onClick={onSubmit}>
               check_circle
             </i>
-            <i className='col material-icons list-icon right ic-red ' style={{ marginTop: '3px' }} onClick={modalHandler}>
+            <i className='col material-icons list-icon right ic-red ' style={{ marginTop: '3px' }} onClick={closeModal}>
               cancel
             </i>
           </div>

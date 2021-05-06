@@ -14,7 +14,11 @@ function App() {
   const url = 'http://localhost:5000/api/items';
   const [items, setItems] = useState([]);
   const [editState, setEditState] = useState({ showModal: false, item: [], ref: [] });
-
+  const close = (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  };
   useEffect(() => {
     getAllItems();
   }, []);
@@ -73,16 +77,14 @@ function App() {
 
   //Edit Item
   const onEdit = (item, itemRef) => {
-    console.log(itemRef);
-    //e.preventDefault();
-
     setEditState({ showModal: true, item: item, ref: itemRef });
+    window.addEventListener('keydown', close);
   };
 
-  const modalHandler = () => {
-    console.log(editState);
+  const closeModal = () => {
     let newEditState = { ...editState, showModal: false };
     setEditState(newEditState);
+    window.removeEventListener('keydown', close);
   };
 
   const onChangeItem = (text) => {
@@ -90,7 +92,7 @@ function App() {
     let newEditState = { ...editState, showModal: false, item: newItem };
     setEditState(newEditState);
     text.text === '' ? deleteItem(newItem.id) : updateItem(newItem);
-    console.log(newEditState);
+    window.removeEventListener('keydown', close);
   };
 
   return (
@@ -103,10 +105,13 @@ function App() {
           exact
           render={(props) => (
             <>
-              <EditItemModal editState={editState} modalHandler={modalHandler} onChangeItem={onChangeItem} />
+              <EditItemModal editState={editState} closeModal={closeModal} onChangeItem={onChangeItem} />
               <AddItem onAdd={addItem} />
-
-              {items.length > 0 ? <Items items={items} onDelete={deleteItem} onToggleCompleted={onToggleCompleted} onEdit={onEdit} /> : 'add something to do'}
+              {items.length > 0 ? (
+                <Items items={items} onDelete={deleteItem} onToggleCompleted={onToggleCompleted} onEdit={onEdit} />
+              ) : (
+                <h5 className='center-align'> Add something to do </h5>
+              )}
             </>
           )}
         ></Route>
