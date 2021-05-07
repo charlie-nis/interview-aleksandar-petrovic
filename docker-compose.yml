@@ -1,0 +1,59 @@
+version: '3.4'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass12345
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - mongodb_network
+      - react-express
+    ports:
+      - 27017:27017
+
+  api:
+    image: api
+    build:
+      context: api
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 5000:5000
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - react-express
+      - mongodb_network
+
+  www:
+    image: www
+    build:
+      context: www
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    stdin_open: true
+    volumes:
+      - ./www
+    container_name: www
+    restart: always
+    networks:
+      - react-express
+    depends_on:
+      - api
+
+volumes:
+  mongodb-data:
+networks:
+  mongodb_network:
+  react-express:

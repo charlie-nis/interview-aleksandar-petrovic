@@ -4,7 +4,7 @@ const About = ({ appVersion }) => {
     <div className='center-align'>
       <h4>ToDoList Web App</h4>
       <h5>Version {appVersion}</h5>
-      <div>Made using React / Express / MongoDB by Aleksandar Petrović</div>
+      <div>Made by Aleksandar Petrović using React / Express / MongoDB</div>
       <br />
       <Link to='/'>Go back</Link>
     </div>
