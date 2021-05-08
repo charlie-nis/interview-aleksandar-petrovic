@@ -1,8 +1,8 @@
-FROM node:12.18-alpine
-ENV NODE_ENV=production
+FROM node:lts-buster-slim
 WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
+COPY package.json /usr/src/app/package.json
+COPY package-lock.json /usr/src/app/package-lock.json
+RUN npm ci
 COPY . /usr/src/app
 EXPOSE 5000
-CMD ["npm", "start"]
+CMD [ "node", "server.js" ]

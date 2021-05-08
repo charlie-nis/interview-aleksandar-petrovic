@@ -2,6 +2,7 @@ import { useRef } from 'react';
 
 const Item = ({ item, onDelete, onToggleCompleted, onEdit }) => {
   const itemRef = useRef();
+  const inputOffsetRef = useRef();
 
   return (
     <h5 ref={itemRef} style={{ borderColor: 'blue', padding: '5px', margin: '5px', backgroundColor: 'white' }}>
@@ -23,13 +24,13 @@ const Item = ({ item, onDelete, onToggleCompleted, onEdit }) => {
             <i className='col material-icons list-icon ic-green  ' onClick={() => onToggleCompleted(item)}>
               radio_button_unchecked
             </i>
-            <span className='col ' style={{ verticalAlign: 'middle' }}>
+            <span ref={inputOffsetRef} className='col ' style={{ verticalAlign: 'middle' }}>
               {item.text}
             </span>
             <i className='col material-icons list-icon right ic-red  ' onClick={() => onDelete(item.id)}>
               delete
             </i>
-            <i className='col material-icons list-icon right ic-blue  ' onClick={() => onEdit(item, itemRef)}>
+            <i className='col material-icons list-icon right ic-blue  ' onClick={() => onEdit(item, itemRef, inputOffsetRef)}>
               mode_edit
             </i>
           </span>

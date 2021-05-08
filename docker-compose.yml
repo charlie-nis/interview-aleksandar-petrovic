@@ -1,59 +1,56 @@
-version: '3.4'
+version: '3.7'
 
 services:
-  mongodb:
+  mongo:
     image: mongo
-    container_name: mongodb
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass12345
+    container_name: mongo
+    restart: always
     volumes:
-      - mongodb-data:/data/db
+      - ./data:/data/db
     networks:
-      - mongodb_network
-      - react-express
+      - express-mongo
     ports:
       - 27017:27017
 
   api:
     image: api
+    container_name: api
+    restart: always
     build:
-      context: api
-      dockerfile: ./Dockerfile
-    environment:
-      NODE_ENV: production
-    ports:
-      - 5000:5000
+      context: ./api
     volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
     depends_on:
-      - mongodb
+      - mongo
     networks:
+      - express-mongo
       - react-express
-      - mongodb_network
-
-  www:
-    image: www
-    build:
-      context: www
-      dockerfile: ./Dockerfile
-    environment:
-      NODE_ENV: production
     ports:
-      - 3000:3000
-    stdin_open: true
+      - 5000:5000
+
+  caddy:
+    image: caddy
+    container_name: caddy
+    restart: unless-stopped
+    build:
+      context: ./www
+    ports:
+      - '8080:8080'
     volumes:
-      - ./www
-    container_name: www
-    restart: always
+      - site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
     networks:
       - react-express
-    depends_on:
-      - api
+      - express-mongo
 
 volumes:
   mongodb-data:
+  caddy_data:
+  caddy_config:
+  site:
+
 networks:
-  mongodb_network:
+  express-mongo:
   react-express:

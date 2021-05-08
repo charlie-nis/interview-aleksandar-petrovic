@@ -6,7 +6,7 @@
 			"script": "server",
 			"path": "api/",
 			"problemMatcher": [],
-			"label": "Start express/mongo",
+			"label": "Start express",
 			"detail": "nodemon server.js"
 		},
 		{

@@ -12,12 +12,9 @@ const EditItemModal = ({ editState, closeModal, onChangeItem }) => {
   };
 
   useEffect(() => {
-    setText(editState.item.text);
-  }, [editState.item.text]);
-
-  useEffect(() => {
     myInput.current.focus();
-  }, [editState.showModal]);
+    setText(editState.item.text);
+  }, [editState.showModal, editState.item.text]);
 
   return (
     <div className=''>
@@ -29,11 +26,11 @@ const EditItemModal = ({ editState, closeModal, onChangeItem }) => {
             ? {
                 opacity: 1,
                 padding: 0,
-                top: editState.ref.current.offsetTop - 2,
-                height: editState.ref.current.offsetHeight + 4,
-                left: editState.ref.current.offsetLeft,
-                width: editState.ref.current.offsetWidth,
-                paddingLeft: editState.ref.current.children[0].children[0].children[1].offsetLeft - editState.ref.current.offsetLeft,
+                top: editState.itemRef.current.offsetTop - 2,
+                height: editState.itemRef.current.offsetHeight + 4,
+                left: editState.itemRef.current.offsetLeft,
+                width: editState.itemRef.current.offsetWidth,
+                paddingLeft: editState.inputOffsetRef.current.offsetLeft - editState.itemRef.current.offsetLeft,
 
                 paddingRight: '0px',
                 verticalAlign: 'middle',

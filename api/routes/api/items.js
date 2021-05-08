@@ -8,7 +8,9 @@ const Item = require('../../models/Item');
 // @desc   Get All Items
 // @access Public
 router.get('/', (req, res) => {
-  Item.find().then((items) => res.json(items));
+  Item.find()
+    .then((items) => res.json(items))
+    .catch((err) => err);
 });
 
 // @route  POST API/items
@@ -19,7 +21,10 @@ router.post('/', (req, res) => {
     text: req.body.text,
   });
 
-  newItem.save().then((item) => res.json(item));
+  newItem
+    .save()
+    .then((item) => res.json(item))
+    .catch((err) => err);
 });
 
 // @route  DELETE API/items:id

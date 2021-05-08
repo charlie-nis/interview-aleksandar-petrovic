@@ -13,12 +13,13 @@ function App() {
   const appVersion = '1.0';
   const url = 'http://localhost:5000/api/items';
   const [items, setItems] = useState([]);
-  const [editState, setEditState] = useState({ showModal: false, item: [], ref: [] });
+  const [editState, setEditState] = useState({ showModal: false, item: [], itemRef: [], inputOffsetRef: [] });
   const close = (e) => {
     if (e.key === 'Escape') {
       closeModal();
     }
   };
+
   useEffect(() => {
     getAllItems();
   }, []);
@@ -28,12 +29,10 @@ function App() {
     axios
       .get(url)
       .then((res) => {
-        // console.log(res.data);
         const allItems = res.data.map((item) => ({ id: item._id, text: item.text, completed: item.completed }));
         setItems(allItems);
-        //console.log(allItems);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert('Something went wrong'));
   };
 
   // Update Item
@@ -71,13 +70,13 @@ function App() {
         setItems([...items, item]);
       })
       .catch((error) => {
-        console.log(error);
+        alert('Something went wrong');
       });
   };
 
   //Edit Item
-  const onEdit = (item, itemRef) => {
-    setEditState({ showModal: true, item: item, ref: itemRef });
+  const onEdit = (item, itemRef, inputOffsetRef) => {
+    setEditState({ showModal: true, item: item, itemRef: itemRef, inputOffsetRef: inputOffsetRef });
     window.addEventListener('keydown', close);
   };
 
@@ -87,6 +86,7 @@ function App() {
     window.removeEventListener('keydown', close);
   };
 
+  //Save changed Item or Delete if response is empty
   const onChangeItem = (text) => {
     let newItem = { ...editState.item, text: text.text };
     let newEditState = { ...editState, showModal: false, item: newItem };
@@ -98,7 +98,6 @@ function App() {
   return (
     <Router>
       <Navbar appVersion={appVersion} />
-
       <div className='container card-panel rounded' style={{ paddingBottom: '30px' }}>
         <Route
           path='/'
