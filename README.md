@@ -1,4 +1,4 @@
-#ToDoList Web App by Aleksandar Petrović
+#ToDoList Web App by Aleksandar Petrovic
 Version 1.0
 
 -Frontend (www) - React (Create React App) with materialize.css
