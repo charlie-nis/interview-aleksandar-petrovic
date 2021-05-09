@@ -4,8 +4,8 @@ Version 1.0
 
 by Aleksandar Petrovic
 
--Frontend (www) - React (Create React App) with materialize.css
--Backend (api) - Node.js Express.js Caddy
+- Frontend (www) - React (Create React App) with materialize.css
+- Backend (api) - Node.js Express.js Caddy
 
 - Dockerfile within "api" folder creates backend with Node.js and Express.js
 - Dockerfile within "www" folder creates image with node.js, builds project and than share folder build to Caddy image
