@@ -9,7 +9,7 @@
 /coverage
 
 #docker data
-/data
+**/data
 
 # misc
 .DS_Store
