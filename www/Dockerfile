@@ -1,6 +1,12 @@
-FROM caddy
+FROM node:lts-buster-slim
 
-COPY Caddyfile /etc/caddy/Caddyfile
-COPY build/. /srv/
+WORKDIR /usr/src/app
 
-EXPOSE 8080
+COPY package.json /usr/src/app/package.json
+COPY package-lock.json /usr/src/app/package-lock.json
+
+RUN npm ci
+
+COPY . /usr/src/app
+
+RUN npm run build

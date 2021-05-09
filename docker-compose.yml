@@ -1,6 +1,19 @@
 version: '3.7'
 
 services:
+  caddy:
+    image: caddy
+    container_name: caddy
+    restart: unless-stopped
+    build:
+      context: ./caddy
+    ports:
+      - '8080:8080'
+    volumes:    
+      - myshare:/srv
+    networks:
+      - react-express
+
   mongo:
     image: mongo
     container_name: mongo
@@ -18,9 +31,6 @@ services:
     restart: always
     build:
       context: ./api
-    volumes:
-      - ./api:/usr/src/app
-      - /usr/src/app/node_modules
     depends_on:
       - mongo
     networks:
@@ -29,27 +39,20 @@ services:
     ports:
       - 5000:5000
 
-  caddy:
-    image: caddy
-    container_name: caddy
-    restart: unless-stopped
+  www:
+    image: www
     build:
       context: ./www
-    ports:
-      - '8080:8080'
+    container_name: www
+    stdin_open: true
     volumes:
-      - site:/srv
-      - caddy_data:/data
-      - caddy_config:/config
-    networks:
-      - react-express
-      - express-mongo
+      - myshare:/usr/src/app/build
+    container_name: www
+    restart: always
 
 volumes:
   mongodb-data:
-  caddy_data:
-  caddy_config:
-  site:
+  myshare:
 
 networks:
   express-mongo:
